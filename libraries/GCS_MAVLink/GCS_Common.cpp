@@ -1050,6 +1050,20 @@ void GCS_MAVLINK::send_radio_in()
         receiver_rssi);        
 }
 
+void GCS_MAVLINK::send_raw_ang1()
+{
+	gcs().send_text(MAV_SEVERITY_INFO, "raw_ang_message_debug1");
+	uint16_t x=1,y=2,z=3;
+	 mavlink_msg_raw_ang1_send(
+	        chan,
+	        AP_HAL::micros(),
+	        x,
+	        y,
+	        z);
+	 gcs().send_text(MAV_SEVERITY_INFO,"raw_ang_message_debug2");
+}
+
+
 void GCS_MAVLINK::send_raw_imu()
 {
     const AP_InertialSensor &ins = AP::ins();
@@ -3065,6 +3079,11 @@ bool GCS_MAVLINK::try_send_message(const enum ap_message id)
         CHECK_PAYLOAD_SIZE(SENSOR_OFFSETS);
         send_sensor_offsets();
         break;
+
+    case MSG_RAW_ANG1:
+    	CHECK_PAYLOAD_SIZE(RAW_ANG1);
+    	send_raw_ang1();
+    	break;
 
     case MSG_SERVO_OUTPUT_RAW:
         CHECK_PAYLOAD_SIZE(SERVO_OUTPUT_RAW);
