@@ -1053,14 +1053,15 @@ void GCS_MAVLINK::send_radio_in()
 void GCS_MAVLINK::send_raw_ang1()
 {
 	gcs().send_text(MAV_SEVERITY_INFO, "raw_ang_message_debug1");
+
 	uint16_t x=1,y=2,z=3;
-	 mavlink_msg_raw_ang1_send(
+	mavlink_msg_raw_ang1_send(
 	        chan,
 	        AP_HAL::micros(),
 	        x,
 	        y,
 	        z);
-	 gcs().send_text(MAV_SEVERITY_INFO,"raw_ang_message_debug2");
+	gcs().send_text(MAV_SEVERITY_INFO,"raw_ang_message_debug2");
 }
 
 
